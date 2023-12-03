@@ -19,7 +19,6 @@ for line in lines:
     game_number_match = re.search(r'Game (\d+):', line)
     game_number = int(game_number_match.group(1))
     games = re.split(r';\s*', line)
-    # games_list = []
     need_add = True
     possible_dict = {}
     for game in games:
@@ -37,9 +36,5 @@ for line in lines:
         results_1.append(game_number)
 
 
-print(sum(results_1))
-print(results_2)
-print(sum(results_2))
-
-        # games_list.append(counts_dict)
-    # print(games_list)
+print("Part I:", sum(results_1))
+print("Part II:", sum(results_2))
