@@ -1,33 +1,39 @@
 def get_next_seq(seq):
-    sum = 0
-    result = []
-    for x, y in zip(seq, seq[1:]):
-        result.append(y - x)
-        sum += (y - x)
-    return sum == 0, result
+    result = [y - x for x, y in zip(seq, seq[1:])]
+    return len(set(seq)) == 1, result
 
 def find_prediction(seq):
     last_number = seq[-1]
     is_zero, seq = get_next_seq(seq)
     while not is_zero:
         last_number += seq[-1]
-        # print(seq)
-        # last_numbers.append(seq[-1])
         is_zero, seq = get_next_seq(seq)
     return last_number
+
+def find_predictions(seq):
+    first_number = seq[0]
+    last_number = seq[-1]
+    print(seq)
+    i = 0
+    is_zero, seq = get_next_seq(seq)
+    while not is_zero:
+        print(seq)
+        i += 1
+        last_number += seq[-1]
+        first_number += seq[0] if i % 2 == 0 else -seq[0]
+        is_zero, seq = get_next_seq(seq)
+    print(first_number, last_number)
+    return first_number, last_number
 
 input = (open('../inputs/day09.txt', 'r')
          .read()
          .splitlines())
 
-result = 0
-count = 0
-results = []
+result_1 = 0
+result_2 = 0
 for line in input:
-    current_result = find_prediction([int(x) for x in line.split(sep = ' ')])
-    result += current_result
-    count += 1
-    results.append((current_result, line))
-for a, b in sorted(results):
-    print(a, b)
-print(count, result)
+    current_result = find_predictions([int(x) for x in line.split(sep = ' ')])
+    result_1 += current_result[1]
+    result_2 += current_result[0]
+
+print(result_1, result_2)
